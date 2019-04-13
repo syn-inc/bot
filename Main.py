@@ -1,9 +1,9 @@
 import os
-
 import requests
 import telebot
 
 token = os.environ['TOKEN']
+
 bot = telebot.TeleBot(token)
 
 
@@ -17,6 +17,13 @@ def get_hum(message):
     bot.reply_to(message, "It's around " + get_anything(2) + "% at FICT")
 
 
+@bot.message_handler(commands=['start', 'help'])
+def start_help_response(message):
+    bot.send_message(message.chat.id,
+                     "Hi, I can help you with situation with current temperature, humidity and other stuff in "
+                     "FICT.\nCheck out commands:\n\n /get_temp - current temperature\n /get_hum - current humidity")
+
+
 def get_anything(sens_id: int) -> str:
     request_url = os.environ['GET_REQUEST'].format(str(sens_id))
     r = requests.get(request_url)
@@ -26,7 +33,8 @@ def get_anything(sens_id: int) -> str:
 
 @bot.message_handler(func=lambda message: True)
 def default_response(message):
-    bot.reply_to(message, "Say what?\nLook at /help, maybe this will help you")
+    photo = open('media/obivan.png', 'rb')
+    bot.send_photo(message.chat.id, photo)
 
 
 bot.polling(none_stop=True)
