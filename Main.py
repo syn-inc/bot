@@ -17,11 +17,31 @@ def get_hum(message):
     bot.reply_to(message, "It's around " + get_anything(2) + "% at FICT")
 
 
+@bot.message_handler(commands=['get_pres'])
+def get_hum(message):
+    bot.reply_to(message, "It's around " + get_anything(3) + "hPa at FICT")
+
+
+@bot.message_handler(commands=['get_alt'])
+def get_hum(message):
+    bot.reply_to(message, "FICT is around at " + get_anything(4) + "m above the height of the sea")
+
+
+@bot.message_handler(commands=['get_light'])
+def get_hum(message):
+    bot.reply_to(message, "It's around " + get_anything(5) + "lx at FICT")
+
+
 @bot.message_handler(commands=['start', 'help'])
 def start_help_response(message):
     bot.send_message(message.chat.id,
                      "Hi, I can help you with situation with current temperature, humidity and other stuff in "
-                     "FICT.\nCheck out commands:\n\n /get_temp - current temperature\n /get_hum - current humidity")
+                     "FICT.\nCheck out commands:\n\n"
+                     "/get_temp - current temperature\n"
+                     "/get_hum - current humidity\n"
+                     "/get_pres - current pressure (in hectopascals)\n"
+                     "/get_alt - current altitude\n"
+                     "/get_light - current amount of luminous flux")
 
 
 def get_anything(sens_id: int) -> str:
