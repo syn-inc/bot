@@ -48,7 +48,7 @@ def get_anything(sens_id: int) -> str:
     request_url = os.environ['GET_REQUEST'].format(str(sens_id))
     r = requests.get(request_url)
     data = r.json()
-    return str(data['Values'][0])
+    return str(data['values'])
 
 
 @bot.message_handler(func=lambda message: True)
